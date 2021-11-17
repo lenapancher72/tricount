@@ -35,13 +35,13 @@ class Tricount
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tricount")
+     * @ORM\ManyToOne(targetEntity=Useraccount::class, inversedBy="tricount")
      * @ORM\JoinColumn(nullable=false)
      */
     private $createdBy;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="supp")
+     * @ORM\ManyToMany(targetEntity=Useraccount::class, inversedBy="supp")
      */
     private $participants;
 
@@ -97,12 +97,12 @@ class Tricount
         return $this;
     }
 
-    public function getCreatedBy(): ?User
+    public function getCreatedBy(): ?Useraccount
     {
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): self
+    public function setCreatedBy(?Useraccount $createdBy): self
     {
         $this->createdBy = $createdBy;
 
@@ -110,14 +110,14 @@ class Tricount
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|Useraccount[]
      */
     public function getParticipants(): Collection
     {
         return $this->participants;
     }
 
-    public function addParticipant(User $participant): self
+    public function addParticipant(Useraccount $participant): self
     {
         if (!$this->participants->contains($participant)) {
             $this->participants[] = $participant;
@@ -126,7 +126,7 @@ class Tricount
         return $this;
     }
 
-    public function removeParticipant(User $participant): self
+    public function removeParticipant(Useraccount $participant): self
     {
         $this->participants->removeElement($participant);
 

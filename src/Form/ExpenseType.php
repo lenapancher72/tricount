@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\Entity\Useraccount;
 use App\Entity\Expense;
 use App\Entity\Tricount;
 use Symfony\Component\Form\AbstractType;
@@ -25,11 +25,11 @@ class ExpenseType extends AbstractType
                 'data' => 22
             ]) */
             ->add('userPaid', EntityType::class, [
-                'class' => User::class,
+                'class' => Useraccount::class,
                 'choice_label' => 'name',
             ])
             ->add('userRefund', EntityType::class, [
-                'class' => User::class,
+                'class' => Useraccount::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
