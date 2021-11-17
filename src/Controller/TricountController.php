@@ -17,19 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class TricountController extends AbstractController
 {
     /**
-     * @Route("/", name="tricount_index", methods={"GET"})
+     * @Route("/", name="tricount_index", methods={"GET", "POST"})
      */
-    public function index(TricountRepository $tricountRepository): Response
-    {
-        return $this->render('tricount/index.html.twig', [
-            'tricounts' => $tricountRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="tricount_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(TricountRepository $tricountRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $tricount = new Tricount();
         $form = $this->createForm(TricountType::class, $tricount);
@@ -42,9 +32,10 @@ class TricountController extends AbstractController
             return $this->redirectToRoute('tricount_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('tricount/new.html.twig', [
+        return $this->render('tricount/index.html.twig', [
+            'tricounts' => $tricountRepository->findAll(),
             'tricount' => $tricount,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 

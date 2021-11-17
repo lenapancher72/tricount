@@ -3,37 +3,44 @@
 {% block title %}Tricount index{% endblock %}
 
 {% block body %}
-    <h1>Tricount index</h1>
+    <div class="container">
+        <div class="row my-3">
+            <h1>Tricount</h1>
+        </div>
+        <div class="row">
+            <div class="col-6 mt-3">
+                <h1>Liste des tricount</h1>
+                <table class="table">
+                    <tbody>
+                    {% for tricount in tricounts %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('expense_index', {'id_tricount': tricount.id}) }}"
+                                   style="text-decoration: none; color: black">{{ tricount.name }}</a>
+                                <a href="{{ path('expense_index', {'id_tricount': tricount.id}) }}"
+                                   style="text-decoration: none; color: black">{{ tricount.device }}</a>
+                                <a href="{{ path('expense_index', {'id_tricount': tricount.id}) }}"
+                                   style="text-decoration: none; color: black">{{ tricount.content }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('tricount_show', {'id': tricount.id}) }}">show</a>
+                                <a href="{{ path('tricount_edit', {'id': tricount.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Device</th>
-                <th>Content</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tricount in tricounts %}
-            <tr>
-                <td>{{ tricount.id }}</td>
-                <td>{{ tricount.name }}</td>
-                <td>{{ tricount.device }}</td>
-                <td>{{ tricount.content }}</td>
-                <td>
-                    <a href="{{ path('tricount_show', {'id': tricount.id}) }}">show</a>
-                    <a href="{{ path('tricount_edit', {'id': tricount.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('tricount_new') }}">Create new</a>
+            <div class="col-6 mt-3">
+                <h1>Créer un nouveau Tricount</h1>
+                {{ include('tricount/_form.html.twig') }}
+                {# <a href="{{ path('tricount_new') }}">Create new</a> #}
+            </div>
+        </div>
+    </div>
 {% endblock %}

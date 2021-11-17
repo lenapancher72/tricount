@@ -17,20 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="user_index", methods={"GET"})
+     * @Route("/", name="user_index", methods={"GET", "POST"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
-    }
 
-    /**
-     * @Route("/new", name="user_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -42,9 +33,10 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user/new.html.twig', [
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findAll(),
             'user' => $user,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
