@@ -9,6 +9,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ExpenseType extends AbstractType
 {
@@ -18,10 +20,10 @@ class ExpenseType extends AbstractType
             ->add('name')
             ->add('createdAt')
             ->add('amount')
-            ->add('tricount', EntityType::class, [
-                'class' => Tricount::class,
-                'choice_label' => 'name',
-            ])
+            /* ->add('tricount', HiddenType::class, [
+                #'class' => Tricount::class,
+                'data' => 22
+            ]) */
             ->add('userPaid', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'name',

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Expense;
+use App\Entity\Tricount;
 use App\Form\ExpenseType;
 use App\Repository\ExpenseRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,7 +28,7 @@ class ExpenseController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="expense_new", methods={"GET", "POST"})
+     * @Route("/", name="expense_new", methods={"GET"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -36,6 +37,15 @@ class ExpenseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            # Get the tricount's ID from the request url
+            $requestUri = explode('/', $request->getRequestUri());
+            $tricountId = (int)$requestUri[2];
+
+            # Get the tricount
+            $em = $entityManager->getRepository(Tricount::class);
+            $tricount = $em->findOneById($tricountId);
+            
+            $expense->setTricount($tricount);
             $entityManager->persist($expense);
             $entityManager->flush();
 
@@ -89,5 +99,10 @@ class ExpenseController extends AbstractController
         }
 
         return $this->redirectToRoute('expense_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function getTricountId($request)
+    {
+        return 'aah';
     }
 }
