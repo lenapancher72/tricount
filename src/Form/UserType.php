@@ -13,8 +13,6 @@ class UserType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('participants')
-            ->add('userRefund')
         ;
     }
 
