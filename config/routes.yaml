@@ -1,3 +1,3 @@
-index:
+newExpense:
   path: /tricount/{id}/expense/new
   controller: App\Controller\ExpenseController::new
