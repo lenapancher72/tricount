@@ -1,4 +1,25 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="mb-3 form-group">
+    {{ form_label(form.name, 'Nom') }}
+    {{ form_widget(form.name, {'attr':{'class':'form-control'}}) }}
+</div>
+<div class="mb-3 form-group">
+    {{ form_label(form.device, 'Device') }}
+    {{ form_widget(form.device, {'attr':{'class':'form-control'}}) }}
+</div>
+<div class="mb-3 form-group">
+    {{ form_label(form.content, 'Description') }}
+    {{ form_widget(form.content, {'attr':{'class':'form-control'}}) }}
+</div>
+<div class="mb-3 form-group">
+    {{ form_label(form.createdBy, 'Créer par') }}
+    {{ form_widget(form.createdBy) }}
+</div>
+<div class="mb-3">
+    {{ form_label(form.participants, 'Participants :') }}
+    {{ form_widget(form.participants) }}
+</div>
+
+<button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
 {{ form_end(form) }}

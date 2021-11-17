@@ -3,17 +3,32 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="container">
+        <div class="row my-3">
+            <h1>Tricount</h1>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-3">
+                <h1>Inscrivez-vous</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.name) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                {{ form_start(registrationForm) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-    <a href="{{ path('app_login') }}">Log in</a>
+                <div class="mb-3 form-group">
+                    {{ form_label(registrationForm.name, 'Prénom') }}
+                    {{ form_widget(registrationForm.name, {'attr':{'class':'form-control'}}) }}
+                </div>
+                <div class="mb-3 form-group">
+                    {{ form_label(registrationForm.email, 'Mail') }}
+                    {{ form_widget(registrationForm.email, {'attr':{'class':'form-control'}}) }}
+                </div>
+                <div class="mb-3 form-group">
+                    {{ form_label(registrationForm.password, 'Password') }}
+                    {{ form_widget(registrationForm.password, {'attr':{'class':'form-control'}}) }}
+                </div>
+
+                {{ form_end(registrationForm) }}
+                <a class="btn btn-primary" href="{{ path('app_login') }}">S'inscrire</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -28,7 +28,7 @@ class ExpenseController extends AbstractController
     }
 
     /**
-     * @Route("/", name="expense_new", methods={"GET"})
+     * @Route("/new", name="expense_new", methods={"GET"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

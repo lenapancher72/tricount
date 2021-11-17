@@ -3,37 +3,47 @@
 {% block title %}Expense index{% endblock %}
 
 {% block body %}
-    <h1>Expense index</h1>
+    <div class="container">
+        <div class="row my-3">
+            <h1>Tricount</h1>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-3">
+                <h1>Liste des dépenses</h1>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Qui a payé ?</th>
+                        <th>Montant</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Participants</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for expense in expenses %}
+                        <tr>
+                            <td>{{ expense.userPaid }}</td>
+                            <td>{{ expense.amount }}</td>
+                            <td>{{ expense.name }}</td>
+                            <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
+                            <td>{{ expense.userRefund }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ path('expense_show', {'id': expense.id}) }}">En
+                                    savoir plus</a>
+                                <a class="btn btn-primary" href="{{ path('expense_edit', {'id': expense.id}) }}">Modifier</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a class="btn btn-primary" href="{{ path('expense_new') }}">Ajouter une dépense</a>
+            </div>
+        </div>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>CreatedAt</th>
-                <th>Amount</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for expense in expenses %}
-            <tr>
-                <td>{{ expense.id }}</td>
-                <td>{{ expense.name }}</td>
-                <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
-                <td>{{ expense.amount }}</td>
-                <td>
-                    <a href="{{ path('expense_show', {'id': expense.id}) }}">show</a>
-                    <a href="{{ path('expense_edit', {'id': expense.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('expense_new') }}">Create new</a>
 {% endblock %}

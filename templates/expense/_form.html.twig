@@ -1,4 +1,25 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="mb-3 form-group">
+    {{ form_label(form.name, 'Nom') }}
+    {{ form_widget(form.name, {'attr':{'class':'form-control'}}) }}
+</div>
+<div class="mb-3 form-group">
+    {{ form_label(form.createdAt, 'Crée le') }}
+    {{ form_widget(form.createdAt) }}
+</div>
+<div class="mb-3 form-group">
+    {{ form_label(form.amount, 'Montant') }}
+    {{ form_widget(form.amount) }}
+</div>
+<div class="mb-3 form-group">
+    {{ form_label(form.userPaid, 'Qui a payé ?') }}
+    {{ form_widget(form.userPaid) }}
+</div>
+<div class="mb-3 form-group">
+    {{ form_label(form.userRefund, 'Participants :') }}
+    {{ form_widget(form.userRefund) }}
+</div>
+
+<button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
 {{ form_end(form) }}

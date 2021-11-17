@@ -16,15 +16,13 @@
                         <tr>
                             <td>
                                 <a href="{{ path('expense_index', {'id_tricount': tricount.id}) }}"
-                                   style="text-decoration: none; color: black">{{ tricount.name }}</a>
+                                   style="text-decoration: none">{{ tricount.name }}</a>
                                 <a href="{{ path('expense_index', {'id_tricount': tricount.id}) }}"
-                                   style="text-decoration: none; color: black">{{ tricount.device }}</a>
-                                <a href="{{ path('expense_index', {'id_tricount': tricount.id}) }}"
-                                   style="text-decoration: none; color: black">{{ tricount.content }}</a>
+                                   style="text-decoration: none">{{ tricount.content }}</a>
                             </td>
                             <td>
-                                <a href="{{ path('tricount_show', {'id': tricount.id}) }}">show</a>
-                                <a href="{{ path('tricount_edit', {'id': tricount.id}) }}">edit</a>
+                                <a class="btn btn-primary" href="{{ path('tricount_show', {'id': tricount.id}) }}">En savoir plus</a>
+                                <a class="btn btn-primary" href="{{ path('tricount_edit', {'id': tricount.id}) }}">Modifier</a>
                             </td>
                         </tr>
                     {% else %}
@@ -39,7 +37,6 @@
             <div class="col-6 mt-3">
                 <h1>Créer un nouveau Tricount</h1>
                 {{ include('tricount/_form.html.twig') }}
-                {# <a href="{{ path('tricount_new') }}">Create new</a> #}
             </div>
         </div>
     </div>
