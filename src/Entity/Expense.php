@@ -41,13 +41,13 @@ class Expense
     private $tricount;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userPaid")
+     * @ORM\ManyToOne(targetEntity=Useraccount::class, inversedBy="userPaid")
      * @ORM\JoinColumn(nullable=false)
      */
     private $userPaid;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="userRefund")
+     * @ORM\ManyToMany(targetEntity=Useraccount::class, inversedBy="userRefund")
      */
     private $userRefund;
 
@@ -109,12 +109,12 @@ class Expense
         return $this;
     }
 
-    public function getUserPaid(): ?User
+    public function getUserPaid(): ?Useraccount
     {
         return $this->userPaid;
     }
 
-    public function setUserPaid(?User $userPaid): self
+    public function setUserPaid(?Useraccount $userPaid): self
     {
         $this->userPaid = $userPaid;
 
@@ -122,14 +122,14 @@ class Expense
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|Useraccount[]
      */
     public function getUserRefund(): Collection
     {
         return $this->userRefund;
     }
 
-    public function addUserRefund(User $userRefund): self
+    public function addUserRefund(Useraccount $userRefund): self
     {
         if (!$this->userRefund->contains($userRefund)) {
             $this->userRefund[] = $userRefund;
@@ -138,7 +138,7 @@ class Expense
         return $this;
     }
 
-    public function removeUserRefund(User $userRefund): self
+    public function removeUserRefund(Useraccount $userRefund): self
     {
         $this->userRefund->removeElement($userRefund);
 

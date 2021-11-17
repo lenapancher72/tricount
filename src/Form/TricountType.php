@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\Entity\Useraccount;
 use App\Entity\Tricount;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,11 +18,11 @@ class TricountType extends AbstractType
             ->add('device')
             ->add('content')
             ->add('createdBy', EntityType::class, [
-                'class' => User::class,
+                'class' => Useraccount::class,
                 'choice_label' => 'name',
             ])
             ->add('participants', EntityType::class, [
-                'class' => User::class,
+                'class' => Useraccount::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
