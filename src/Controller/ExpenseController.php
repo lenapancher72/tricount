@@ -5,20 +5,27 @@ namespace App\Controller;
 use App\Entity\Expense;
 use App\Entity\Tricount;
 use App\Form\ExpenseType;
-use App\Form\TricountType;
 use App\Repository\ExpenseRepository;
-use App\Repository\TricountRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Services\MailerService;
+
 /**
  * @Route("/")
  */
 class ExpenseController extends AbstractController
 {
+    private $calculService;
+
+    public function __construct(MailerService $mailerService)
+    {
+        $this->mailerService = $mailerService;
+    }
+
     /**
      * @Route("/tricount/{tricount_id}/expense", name="expense_index", methods={"GET"})
      */
@@ -27,6 +34,8 @@ class ExpenseController extends AbstractController
         # Get the tricount ID from the request url
         $requestUri = explode('/', $request->getRequestUri());
         $tricountId = (int)$requestUri[2];
+
+        /* dd($expenseRepository->findBy(['tricount' => $tricountId])); */
 
         return $this->render('expense/index.html.twig', [
             'expenses' => $expenseRepository->findBy(['tricount' => $tricountId]),
@@ -56,9 +65,15 @@ class ExpenseController extends AbstractController
             $entityManager->persist($expense);
             $entityManager->flush();
 
-            return $this->redirectToRoute('expense_index', [
-                'tricount_id' => $tricountId,
-            ], Response::HTTP_SEE_OTHER);
+            # Send email to participants
+            $participants = ['user1@user.fr', 'user2@user.fr', 'user3@user.fr'];
+            $url = 'http://localhost:8000/tricount/'.$tricountId.'/expense/'.$expense->getId();
+
+            foreach ($participants as $participant) {
+                $this->mailerService->sendEmail($url, $participant);
+            }
+
+            return $this->redirectToRoute('expense_index', ['id' => $tricountId], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('expense/new.html.twig', [

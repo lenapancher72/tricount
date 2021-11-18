@@ -3,7 +3,7 @@ indexExpense:
   controller: App\Controller\ExpenseController::index
 
 newExpense:
-  path: /tricount/{tricount_id}/expense/new
+  path: /tricount/{id}/expense/new
   controller: App\Controller\ExpenseController::new
 
 showExpense:
