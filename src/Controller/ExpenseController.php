@@ -12,11 +12,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Services\MailerService;
+
 /**
  * @Route("/expense")
  */
 class ExpenseController extends AbstractController
 {
+    private $calculService;
+
+    public function __construct(MailerService $mailerService)
+    {
+        $this->mailerService = $mailerService;
+    }
+
     /**
      * @Route("/", name="expense_index", methods={"GET"})
      */
@@ -55,7 +64,15 @@ class ExpenseController extends AbstractController
             $entityManager->persist($expense);
             $entityManager->flush();
 
-            return $this->redirectToRoute('expense_index', [], Response::HTTP_SEE_OTHER);
+            # Send email to participants
+            $participants = ['user1@user.fr', 'user2@user.fr', 'user3@user.fr'];
+            $url = 'http://localhost:8000/tricount/'.$tricountId.'/expense/'.$expense->getId();
+
+            foreach ($participants as $participant) {
+                $this->mailerService->sendEmail($url, $participant);
+            }
+
+            return $this->redirectToRoute('tricount_expenses', ['id' => $tricountId], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('expense/new.html.twig', [
