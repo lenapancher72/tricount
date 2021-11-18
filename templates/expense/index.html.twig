@@ -27,8 +27,11 @@
                             <td>{{ expense.amount }}</td>
                             <td>{{ expense.name }}</td>
                             <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
-                            <td></td>
-                            {# <td>{{ expense.userRefund }}</td> #}
+                            <td>
+                                {% for user in expense.userRefund.values %}
+                                    <p>{{user.name}}</p>
+                                {% endfor %}
+                            </td>
                             <td>
                                 <a class="btn btn-primary" href="{{ path('expense_show', {'id': expense.id}) }}">En
                                     savoir plus</a>

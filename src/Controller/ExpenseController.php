@@ -35,10 +35,8 @@ class ExpenseController extends AbstractController
         $requestUri = explode('/', $request->getRequestUri());
         $tricountId = (int)$requestUri[2];
 
-        /* dd($expenseRepository->findBy(['tricount' => $tricountId])); */
-
         return $this->render('expense/index.html.twig', [
-            'expenses' => $expenseRepository->findBy(['tricount' => $tricountId])
+            'expenses' => $expenseRepository->findBy(['tricount' => $tricountId]),
         ]);
     }
 
@@ -65,11 +63,11 @@ class ExpenseController extends AbstractController
             $entityManager->flush();
 
             # Send email to participants
-            $participants = ['user1@user.fr', 'user2@user.fr', 'user3@user.fr'];
+            $participants = $expense->getUserRefund()->getValues();
             $url = 'http://localhost:8000/tricount/'.$tricountId.'/expense/'.$expense->getId();
 
             foreach ($participants as $participant) {
-                $this->mailerService->sendEmail($url, $participant);
+                $this->mailerService->sendEmail($url, $participant->getEmail());
             }
 
             return $this->redirectToRoute('tricount_expenses', ['id' => $tricountId], Response::HTTP_SEE_OTHER);
