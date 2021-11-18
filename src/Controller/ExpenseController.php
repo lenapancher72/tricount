@@ -20,10 +20,16 @@ class ExpenseController extends AbstractController
     /**
      * @Route("/", name="expense_index", methods={"GET"})
      */
-    public function index(ExpenseRepository $expenseRepository): Response
+    public function index(ExpenseRepository $expenseRepository, Request $request): Response
     {
+        # Get the tricount ID from the request url
+        $requestUri = explode('/', $request->getRequestUri());
+        $tricountId = (int)$requestUri[2];
+
+        /* dd($expenseRepository->findBy(['tricount' => $tricountId])); */
+
         return $this->render('expense/index.html.twig', [
-            'expenses' => $expenseRepository->findAll(),
+            'expenses' => $expenseRepository->findBy(['tricount' => $tricountId])
         ]);
     }
 
@@ -37,7 +43,7 @@ class ExpenseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            # Get the tricount's ID from the request url
+            # Get the tricount ID from the request url
             $requestUri = explode('/', $request->getRequestUri());
             $tricountId = (int)$requestUri[2];
 

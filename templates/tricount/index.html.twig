@@ -15,9 +15,9 @@
                     {% for tricount in tricounts %}
                         <tr>
                             <td>
-                                <a href="{{ path('expense_index', {'id_tricount': tricount.id}) }}"
+                                <a href="{{ path('tricountExpenses', {'id': tricount.id}) }}"
                                    style="text-decoration: none">{{ tricount.name }}</a>
-                                <a href="{{ path('expense_index', {'id_tricount': tricount.id}) }}"
+                                <a href="{{ path('tricountExpenses', {'id': tricount.id}) }}"
                                    style="text-decoration: none">{{ tricount.content }}</a>
                             </td>
                             <td>
