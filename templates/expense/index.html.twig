@@ -3,59 +3,51 @@
 {% block title %}Expense index{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row my-3">
-            <h1>Tricount</h1>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-3">
-                <h1>Liste des dépenses</h1>
-                <table class="table">
-                    <thead>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Liste des dépenses</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Qui a payé ?</th>
+                    <th>Montant</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Participants</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for expense in expenses %}
                     <tr>
-                        <th>Qui a payé ?</th>
-                        <th>Montant</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th>Participants</th>
+                        <td>{{ expense.userPaid.name }}</td>
+                        <td>{{ expense.amount }}</td>
+                        <td>{{ expense.name }}</td>
+                        <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
+                        <td>
+                            {% for user in expense.userRefund.values %}
+                                <p>{{ user.name }}</p>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a class="btn btn-primary"
+                               href="{{ path('expense_show', {'tricount_id': tricount, 'expense_id': expense.id}) }}">En savoir plus</a>
+                            <a class="btn btn-primary" href="{{ path('expense_edit', {'tricount_id': tricount, 'expense_id': expense.id}) }}">Modifier</a>
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    {% for expense in expenses %}
-                        <tr>
-                            <td>{{ expense.userPaid.name }}</td>
-                            <td>{{ expense.amount }}</td>
-                            <td>{{ expense.name }}</td>
-                            <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
-                            <td>
-                                {% for user in expense.userRefund.values %}
-                                    <p>{{user.name}}</p>
-                                {% endfor %}
-                            </td>
-                            <td>
-                                <a class="btn btn-primary"
-                                   href="{{ path('expense_show', {'tricount_id': tricount, 'expense_id': expense.id}) }}">En
-                                    savoir plus</a>
-                                <a class="btn btn-primary"
-                                   href="{{ path('expense_edit', {'tricount_id': tricount}) }}">Modifier</a>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5">no records found</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <a class="btn btn-primary" href="{{ path('expense_new', {'tricount_id': tricount}) }}">Ajouter une dépense</a>
-            </div>
-        </div>
-
-            <div class="col-12 mt-3">
-                {% for user in balance %}
-                    <p>{{user.name}}: {{user.amount}} {{device}}</p>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
                 {% endfor %}
-            </div>
+                </tbody>
+            </table>
+            <a class="btn btn-primary" href="{{ path('tricount_index') }}">Retour</a>
+            <a class="btn btn-primary" href="{{ path('expense_new', {'tricount_id': tricount}) }}">Ajouter une dépense</a>
+        </div>
+        <div class="col-12 mt-3">
+            {% for user in balance %}
+                <p>{{ user.name }}: {{ user.amount }} {{ device }}</p>
+            {% endfor %}
+        </div>
     </div>
-
 {% endblock %}

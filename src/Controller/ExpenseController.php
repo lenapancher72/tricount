@@ -92,16 +92,16 @@ class ExpenseController extends AbstractController
     }
 
     /**
-     * @Route("/tricount/{tricount_id}/expense/{expense_id}", name="expense_show", methods={"GET"})
+     * @Route("/tricount/{tricount_id}/expense/show", name="expense_show", methods={"GET"})
      */
-    public function show(ExpenseRepository $expenseRepository, Request $request, $expense_id): Response
+    public function show(Expense $expense, Request $request): Response
     {
         # Get the tricount ID from the request url
         $requestUriTricountId = explode('/', $request->getRequestUri());
         $tricountId = (int)$requestUriTricountId[2];
 
         return $this->render('expense/show.html.twig', [
-            'expense' => $expenseRepository->findOneById($expense_id),
+            'expense' => $expense,
             'tricount' => $tricountId,
         ]);
     }
@@ -109,7 +109,7 @@ class ExpenseController extends AbstractController
     /**
      * @Route("/tricount/{tricount_id}/expense/edit", name="expense_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, ExpenseRepository $expenseRepository, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Expense $expense, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ExpenseType::class, null);
         $form->handleRequest($request);
@@ -125,9 +125,8 @@ class ExpenseController extends AbstractController
                 'tricount_id' => $tricountId,
             ], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('expense/edit.html.twig', [
-            'expense' => $expenseRepository->findBy(['tricount' => $tricountId]),
+            'expense' => $expense,
             'form' => $form,
             'tricount' => $tricountId,
         ]);

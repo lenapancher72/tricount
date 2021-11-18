@@ -13,6 +13,6 @@ class RedirectController extends AbstractController
      */
     public function redirection(): Response
     {
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_register');
     }
 }

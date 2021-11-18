@@ -3,36 +3,32 @@
 {% block title %}Expense{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row my-3">
-            <h1>Tricount</h1>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Détails de la dépense "{{ expense[0].name }}"</h1>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ expense[0].name }}</td>
+                </tr>
+                <tr>
+                    <th>CreatedAt</th>
+                    <td>{{ expense[0].createdAt ? expense[0].createdAt|date('Y-m-d') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Amount</th>
+                    <td>{{ expense[0].amount }}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="row">
-            <div class="col-12 mt-3">
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <td>{{ expense.name }}</td>
-                    </tr>
-                    <tr>
-                        <th>CreatedAt</th>
-                        <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Amount</th>
-                        <td>{{ expense.amount }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="d-flex">
-                <a class="btn btn-primary" href="{{ path('expense_index', {'tricount_id': tricount}) }}">Retour</a>
-                <a class="btn btn-primary" href="{{ path('expense_edit', {'tricount_id': tricount}) }}">Modifier</a>
-                {{ include('expense/_delete_form.html.twig') }}
-            </div>
+    </div>
+    <div class="row">
+        <div class="d-flex">
+            <a class="btn btn-primary me-2" href="{{ path('expense_index', {'tricount_id': tricount, 'expense_id': expense.id}) }}">Retour</a>
+            <a class="btn btn-primary me-2" href="{{ path('expense_edit', {'tricount_id': tricount, 'expense_id': expense.id}) }}">Modifier</a>
+            {{ include('expense/_delete_form.html.twig') }}
         </div>
     </div>
 {% endblock %}

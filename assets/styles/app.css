@@ -1,11 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;1,200&display=swap');
+
 body {
-    background-color: lightgray;
+    background-color: #3493d6!important;
+    font-family: 'Poppins', serif!important;
 }
 
-.btn {
+.btn-primary {
     background-color: #3493d6!important;
     color: whitesmoke;
     border-color: #3493d6!important;
+}
+
+#tricount {
+    background-color: whitesmoke!important;
+    padding: 4%;
+}
+
+#img-tricount {
+    width: 20%;
 }
 
 /*ANIMATION FLOCONS DE NEIGE*/

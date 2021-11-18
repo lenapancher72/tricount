@@ -3,21 +3,16 @@
 {% block title %}Edit Expense{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row my-3">
-            <h1>Tricount</h1>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Modifier la dépense "{{ expense[0].name }}"</h1>
+            {{ include('expense/_form.html.twig', {'button_label': 'Modifier'}) }}
         </div>
-        <div class="row">
-            <div class="col-12 mt-3">
-                <h1>Modifier la dépense</h1>
-                {{ include('expense/_form.html.twig', {'button_label': 'Modifier'}) }}
-            </div>
-        </div>
-        <div class="row my-3">
-            <div class="d-flex">
-                <a class="btn btn-primary" href="{{ path('expense_index', {'tricount_id': tricount}) }}">Retour</a>
-                {{ include('expense/_delete_form.html.twig') }}
-            </div>
+    </div>
+    <div class="row my-3">
+        <div class="d-flex">
+            <a class="btn btn-primary me-2" href="{{ path('expense_index', {'tricount_id': tricount}) }}">Retour</a>
+            {{ include('expense/_delete_form.html.twig') }}
         </div>
     </div>
 {% endblock %}

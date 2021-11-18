@@ -3,16 +3,11 @@
 {% block title %}New Expense{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row my-3">
-            <h1>Tricount</h1>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-3">
-                <h1>Ajout d'une nouvelle dépense</h1>
-                {{ include('expense/_form.html.twig') }}
-                <a class="btn btn-primary" href="{{ path('expense_index', {'tricount_id': tricount}) }}">Retour</a>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Ajouter une dépense</h1>
+            {{ include('expense/_form.html.twig') }}
+            <a class="btn btn-primary mt-2" href="{{ path('expense_index', {'tricount_id': tricount}) }}">Retour</a>
         </div>
     </div>
 {% endblock %}

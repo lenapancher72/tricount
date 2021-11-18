@@ -5,7 +5,7 @@
     {{ form_widget(form.name, {'attr':{'class':'form-control'}}) }}
 </div>
 <div class="mb-3 form-group">
-    {{ form_label(form.device, 'Device') }}
+    {{ form_label(form.device, 'Devise') }}
     {{ form_widget(form.device, {'attr':{'class':'form-control'}}) }}
 </div>
 <div class="mb-3 form-group">
@@ -14,7 +14,7 @@
 </div>
 <div class="mb-3 form-group">
     {{ form_label(form.createdBy, 'Créer par') }}
-    {{ form_widget(form.createdBy) }}
+    {{ form_widget(form.createdBy, {'attr':{'class':'form-control'}}) }}
 </div>
 <div class="mb-3">
     {{ form_label(form.participants, 'Participants :') }}
@@ -23,3 +23,6 @@
 
 <button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
 {{ form_end(form) }}
+
+
+
