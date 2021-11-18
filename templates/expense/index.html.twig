@@ -23,7 +23,7 @@
                     <tbody>
                     {% for expense in expenses %}
                         <tr>
-                            <td>{{ expense.userPaid.id }}</td>
+                            <td>{{ expense.userPaid.name }}</td>
                             <td>{{ expense.amount }}</td>
                             <td>{{ expense.name }}</td>
                             <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
@@ -33,9 +33,11 @@
                                 {% endfor %}
                             </td>
                             <td>
-                                <a class="btn btn-primary" href="{{ path('expense_show', {'id': expense.id}) }}">En
+                                <a class="btn btn-primary"
+                                   href="{{ path('expense_show', {'tricount_id': tricount}) }}">En
                                     savoir plus</a>
-                                <a class="btn btn-primary" href="{{ path('expense_edit', {'id': expense.id}) }}">Modifier</a>
+                                <a class="btn btn-primary"
+                                   href="{{ path('expense_edit', {'tricount_id': tricount}) }}">Modifier</a>
                             </td>
                         </tr>
                     {% else %}
@@ -45,7 +47,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <a class="btn btn-primary" href="{{ path('expense_new') }}">Ajouter une dépense</a>
+                <a class="btn btn-primary" href="{{ path('expense_new', {'tricount_id': tricount}) }}">Ajouter une dépense</a>
             </div>
         </div>
     </div>
