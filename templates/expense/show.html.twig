@@ -13,15 +13,15 @@
                     <tbody>
                     <tr>
                         <th>Name</th>
-                        <td>{{ expense[0].name }}</td>
+                        <td>{{ expense.name }}</td>
                     </tr>
                     <tr>
                         <th>CreatedAt</th>
-                        <td>{{ expense[0].createdAt ? expense[0].createdAt|date('Y-m-d') : '' }}</td>
+                        <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
                     </tr>
                     <tr>
                         <th>Amount</th>
-                        <td>{{ expense[0].amount }}</td>
+                        <td>{{ expense.amount }}</td>
                     </tr>
                     </tbody>
                 </table>

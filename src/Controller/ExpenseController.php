@@ -13,31 +13,41 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Services\MailerService;
+use App\Services\BalanceService;
 
 /**
  * @Route("/")
  */
 class ExpenseController extends AbstractController
 {
-    private $calculService;
+    private $mailerService;
+    private $balanceService;
 
-    public function __construct(MailerService $mailerService)
+    public function __construct(MailerService $mailerService, BalanceService $balanceService)
     {
         $this->mailerService = $mailerService;
+        $this->balanceService = $balanceService;
     }
 
     /**
      * @Route("/tricount/{tricount_id}/expense", name="expense_index", methods={"GET"})
      */
-    public function index(ExpenseRepository $expenseRepository, Request $request): Response
+    public function index(ExpenseRepository $expenseRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         # Get the tricount ID from the request url
         $requestUri = explode('/', $request->getRequestUri());
         $tricountId = (int)$requestUri[2];
 
+        $em = $entityManager->getRepository(Tricount::class);
+        $tricount = $em->findOneById($tricountId);
+
+        $balance = $this->balanceService->makeBalance($tricountId);
+
         return $this->render('expense/index.html.twig', [
             'expenses' => $expenseRepository->findBy(['tricount' => $tricountId]),
             'tricount' => $tricountId,
+            'device' => $tricount->getDevice(),
+            'balance' => $balance
         ]);
     }
 
@@ -71,7 +81,7 @@ class ExpenseController extends AbstractController
                 $this->mailerService->sendEmail($url, $participant->getEmail());
             }
 
-            return $this->redirectToRoute('expense_index', ['id' => $tricountId], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('expense_index', ['tricount_id' => $tricountId], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('expense/new.html.twig', [
@@ -82,16 +92,16 @@ class ExpenseController extends AbstractController
     }
 
     /**
-     * @Route("/tricount/{tricount_id}/expense/show", name="expense_show", methods={"GET"})
+     * @Route("/tricount/{tricount_id}/expense/{expense_id}", name="expense_show", methods={"GET"})
      */
-    public function show(ExpenseRepository $expenseRepository, Request $request): Response
+    public function show(ExpenseRepository $expenseRepository, Request $request, $expense_id): Response
     {
         # Get the tricount ID from the request url
         $requestUriTricountId = explode('/', $request->getRequestUri());
         $tricountId = (int)$requestUriTricountId[2];
 
         return $this->render('expense/show.html.twig', [
-            'expense' => $expenseRepository->findBy(['tricount' => $tricountId]),
+            'expense' => $expenseRepository->findOneById($expense_id),
             'tricount' => $tricountId,
         ]);
     }

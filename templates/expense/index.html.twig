@@ -34,7 +34,7 @@
                             </td>
                             <td>
                                 <a class="btn btn-primary"
-                                   href="{{ path('expense_show', {'tricount_id': tricount}) }}">En
+                                   href="{{ path('expense_show', {'tricount_id': tricount, 'expense_id': expense.id}) }}">En
                                     savoir plus</a>
                                 <a class="btn btn-primary"
                                    href="{{ path('expense_edit', {'tricount_id': tricount}) }}">Modifier</a>
@@ -50,6 +50,12 @@
                 <a class="btn btn-primary" href="{{ path('expense_new', {'tricount_id': tricount}) }}">Ajouter une dépense</a>
             </div>
         </div>
+
+            <div class="col-12 mt-3">
+                {% for user in balance %}
+                    <p>{{user.name}}: {{user.amount}} {{device}}</p>
+                {% endfor %}
+            </div>
     </div>
 
 {% endblock %}
