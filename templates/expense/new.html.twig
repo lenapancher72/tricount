@@ -11,7 +11,7 @@
             <div class="col-12 mt-3">
                 <h1>Ajout d'une nouvelle dépense</h1>
                 {{ include('expense/_form.html.twig') }}
-                <a class="btn btn-primary" href="{{ path('expense_index') }}">Retour</a>
+                <a class="btn btn-primary" href="{{ path('expense_index', {'tricount_id': tricount}) }}">Retour</a>
             </div>
         </div>
     </div>
