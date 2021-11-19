@@ -46,7 +46,7 @@ class Tricount
     private $participants;
 
     /**
-     * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="tricountId")
+     * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="tricountId", orphanRemoval=true)
      */
     private $tricountId;
 

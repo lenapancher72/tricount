@@ -30,22 +30,17 @@ class ExpenseController extends AbstractController
     }
 
     /**
-     * @Route("/tricount/{tricount_id}/expense", name="expense_index", methods={"GET"})
+     * @Route("/tricount/{id}/expense", name="expense_index", methods={"GET"})
      */
-    public function index(ExpenseRepository $expenseRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Tricount $tricount, Request $request, ExpenseRepository $expenseRepository): Response
     {
-        # Get the tricount ID from the request url
-        $requestUri = explode('/', $request->getRequestUri());
-        $tricountId = (int)$requestUri[2];
 
-        $em = $entityManager->getRepository(Tricount::class);
-        $tricount = $em->findOneById($tricountId);
 
-        $balance = $this->balanceService->makeBalance($tricountId);
+        $balance = $this->balanceService->makeBalance($tricount->getId());
 
         return $this->render('expense/index.html.twig', [
-            'expenses' => $expenseRepository->findBy(['tricount' => $tricountId]),
-            'tricount' => $tricountId,
+            'expenses' => $expenseRepository->findBy(['tricount' => $tricount]),
+            'tricount' => $tricount->getId(),
             'device' => $tricount->getDevice(),
             'balance' => $balance
         ]);
@@ -81,7 +76,9 @@ class ExpenseController extends AbstractController
                 $this->mailerService->sendEmail($url, $participant->getEmail());
             }
 
-            return $this->redirectToRoute('expense_index', ['tricount_id' => $tricountId], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('expense_index', [
+                'id' => $expense->getTricount()->getId(),
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('expense/new.html.twig', [
@@ -92,54 +89,43 @@ class ExpenseController extends AbstractController
     }
 
     /**
-     * @Route("/tricount/{tricount_id}/expense/show", name="expense_show", methods={"GET"})
+     * @Route("/tricount/{tricount}/expense/show", name="expense_show", methods={"GET"})
      */
     public function show(Expense $expense, Request $request): Response
     {
-        # Get the tricount ID from the request url
-        $requestUriTricountId = explode('/', $request->getRequestUri());
-        $tricountId = (int)$requestUriTricountId[2];
-
         return $this->render('expense/show.html.twig', [
             'expense' => $expense,
-            'tricount' => $tricountId,
+            'tricount' => $expense->getTricount(),
         ]);
     }
 
     /**
-     * @Route("/tricount/{tricount_id}/expense/edit", name="expense_edit", methods={"GET", "POST"})
+     * @Route("/tricount/{tricount}/expense/edit", name="expense_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Expense $expense, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ExpenseType::class, null);
         $form->handleRequest($request);
 
-        # Get the tricount ID from the request url
-        $requestUri = explode('/', $request->getRequestUri());
-        $tricountId = (int)$requestUri[2];
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
             return $this->redirectToRoute('expense_index', [
-                'tricount_id' => $tricountId,
+                'id' => $expense->getTricount()->getId(),
             ], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('expense/edit.html.twig', [
             'expense' => $expense,
             'form' => $form,
-            'tricount' => $tricountId,
+            'tricount' => $expense->getTricount(),
         ]);
     }
 
     /**
-     * @Route("/expense/delete", name="expense_delete", methods={"POST"})
+     * @Route("/expense/{id}/delete", name="expense_delete", methods={"POST"})
      */
-    public function delete(Request $request, ExpenseRepository $expense, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Expense $expense, EntityManagerInterface $entityManager): Response
     {
-        # Get the tricount ID from the request url
-        $requestUriTricountId = explode('/', $request->getRequestUri());
-        $tricountId = (int)$requestUriTricountId[2];
 
         if ($this->isCsrfTokenValid('delete' . $expense->getId(), $request->request->get('_token'))) {
             $entityManager->remove($expense);
@@ -147,7 +133,7 @@ class ExpenseController extends AbstractController
         }
 
         return $this->redirectToRoute('expense_index', [
-            'tricount_id' => $tricountId,
+            'id' => $expense->getTricount()->getId(),
         ], Response::HTTP_SEE_OTHER);
     }
 

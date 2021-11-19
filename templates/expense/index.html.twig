@@ -30,8 +30,8 @@
                         </td>
                         <td>
                             <a class="btn btn-primary"
-                               href="{{ path('expense_show', {'tricount_id': tricount, 'expense_id': expense.id}) }}">En savoir plus</a>
-                            <a class="btn btn-primary" href="{{ path('expense_edit', {'tricount_id': tricount, 'expense_id': expense.id}) }}">Modifier</a>
+                               href="{{ path('expense_show', {'tricount': tricount}) }}">En savoir plus</a>
+                            <a class="btn btn-primary" href="{{ path('expense_edit', {'tricount': tricount}) }}">Modifier</a>
                         </td>
                     </tr>
                 {% else %}

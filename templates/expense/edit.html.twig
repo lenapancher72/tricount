@@ -5,13 +5,13 @@
 {% block body %}
     <div class="row">
         <div class="col-12">
-            <h1 class="mb-4">Modifier la dépense "{{ expense[0].name }}"</h1>
+            <h1 class="mb-4">Modifier la dépense "{{ expense.name }}"</h1>
             {{ include('expense/_form.html.twig', {'button_label': 'Modifier'}) }}
         </div>
     </div>
     <div class="row my-3">
         <div class="d-flex">
-            <a class="btn btn-primary me-2" href="{{ path('expense_index', {'tricount_id': tricount}) }}">Retour</a>
+            <a class="btn btn-primary me-2" href="{{ path('expense_index', {'id': tricount.id}) }}">Retour</a>
             {{ include('expense/_delete_form.html.twig') }}
         </div>
     </div>

@@ -1,19 +1,1 @@
-indexExpense:
-  path: /tricount/{tricount_id}/expense
-  controller: App\Controller\ExpenseController::index
 
-newExpense:
-  path: /tricount/{id}/expense/new
-  controller: App\Controller\ExpenseController::new
-
-showExpense:
-  path: /tricount/{tricount_id}/expense/show
-  controller: App\Controller\ExpenseController::show
-
-editExpense:
-  path: /tricount/{tricount_id}/expense/edit
-  controller: App\Controller\ExpenseController::edit
-
-deleteExpense:
-  path: /expense/delete
-  controller: App\Controller\ExpenseController::delete
