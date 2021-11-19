@@ -27,7 +27,7 @@
     <div class="row">
         <div class="d-flex">
             <a class="btn btn-primary me-2" href="{{ path('expense_index', {'id': tricount.id}) }}">Retour</a>
-            <a class="btn btn-primary me-2" href="{{ path('expense_edit', {'tricount': tricount.id}) }}">Modifier</a>
+            <a class="btn btn-primary me-2" href="{{ path('expense_edit', {'tricount': tricount.id, 'expense_id': expense.id}) }}">Modifier</a>
             {{ include('expense/_delete_form.html.twig') }}
         </div>
     </div>

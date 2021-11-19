@@ -1,9 +1,3 @@
-
-
-showExpense:
-  path: /tricount/{tricount_id}/expense/{expense_id}
-  controller: App\Controller\ExpenseController::show
-
 editExpense:
   path: /tricount/{tricount_id}/expense/edit
   controller: App\Controller\ExpenseController::edit
