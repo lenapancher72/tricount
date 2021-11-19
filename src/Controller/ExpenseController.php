@@ -49,19 +49,21 @@ class ExpenseController extends AbstractController
     /**
      * @Route("/tricount/{tricount_id}/expense/new", name="expense_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, $tricount_id): Response
     {
         $expense = new Expense();
-        $form = $this->createForm(ExpenseType::class, $expense);
+        $tricount = $entityManager->getRepository(Tricount::class)->find($tricount_id)->getParticipants();
+        $form = $this->createForm(ExpenseType::class, $expense, ['tricount' => $tricount]);
         $form->handleRequest($request);
+
 
         # Get the tricount's ID from the request url
         $requestUri = explode('/', $request->getRequestUri());
         $tricountId = (int)$requestUri[2];
 
         # Get the tricount
-        $em = $entityManager->getRepository(Tricount::class);
-        $tricount = $em->findOneById($tricountId);
+       /*  $em = $entityManager->getRepository(Tricount::class);
+        $tricount = $em->find($tricountId); */
 
         if ($form->isSubmitted() && $form->isValid()) {
             $expense->setTricount($tricount);
@@ -94,7 +96,7 @@ class ExpenseController extends AbstractController
     public function show($expense_id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $em = $entityManager->getRepository(Expense::class);
-        $expense = $em->findOneById($expense_id);
+        $expense = $em->find($expense_id);
 
         return $this->render('expense/show.html.twig', [
             'expense' => $expense,
@@ -111,7 +113,6 @@ class ExpenseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
             $entityManager->flush();
 
             return $this->redirectToRoute('expense_index', [
