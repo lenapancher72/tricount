@@ -14,7 +14,7 @@ class SecurityController extends AbstractController
      */
     public function home(): Response
     {
-        return new Response('bonjour');
+        return $this->redirectToRoute('tricount_index');
     }
 
     /**

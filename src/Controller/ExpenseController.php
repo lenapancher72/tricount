@@ -52,8 +52,8 @@ class ExpenseController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, $tricount_id): Response
     {
         $expense = new Expense();
-        $tricount = $entityManager->getRepository(Tricount::class)->find($tricount_id)->getParticipants();
-        $form = $this->createForm(ExpenseType::class, $expense, ['tricount' => $tricount]);
+        $newTricount = $entityManager->getRepository(Tricount::class)->find($tricount_id)->getParticipants();
+        $form = $this->createForm(ExpenseType::class, $expense, ['tricount' => $newTricount]);
         $form->handleRequest($request);
 
 
@@ -62,8 +62,8 @@ class ExpenseController extends AbstractController
         $tricountId = (int)$requestUri[2];
 
         # Get the tricount
-       /*  $em = $entityManager->getRepository(Tricount::class);
-        $tricount = $em->find($tricountId); */
+        $em = $entityManager->getRepository(Tricount::class);
+        $tricount = $em->find($tricountId);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $expense->setTricount($tricount);
