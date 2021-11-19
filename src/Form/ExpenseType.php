@@ -34,7 +34,7 @@ class ExpenseType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
-                'choices' => $options['tricount']->getValues()
+//                'choices' => $options['tricount']->getValues()
             ])
         ;
     }

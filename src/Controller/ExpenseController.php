@@ -107,7 +107,7 @@ class ExpenseController extends AbstractController
     /**
      * @Route("/tricount/{tricount}/expense/{expense_id}/edit", name="expense_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, EntityManagerInterface $entityManager, $expense_id, Expense $expense): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager, Expense $expense): Response
     {
         $form = $this->createForm(ExpenseType::class, $expense);
         $form->handleRequest($request);

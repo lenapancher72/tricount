@@ -22,7 +22,7 @@
                         <td>{{ expense.userPaid.name }}</td>
                         <td>{{ expense.amount }}</td>
                         <td>{{ expense.name }}</td>
-                        <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d') : '' }}</td>
+                        <td>{{ expense.createdAt ? expense.createdAt|date('d-m-Y') : '' }}</td>
                         <td>
                             {% for user in expense.userRefund.values %}
                                 <p>{{ user.name }}</p>
