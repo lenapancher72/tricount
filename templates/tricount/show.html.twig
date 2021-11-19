@@ -22,11 +22,11 @@
                 </tr>
                 <tr>
                     <th>Participants</th>
-                    {% for tri in tricount %}
-                        {% for user in tricount.userRefund.values %}
-                            <p>{{ user.name }}</p>
+                    <td>
+                        {% for user in tricount.participants %}
+                            <li>{{ user.name }}</li>
                         {% endfor %}
-                    {% endfor %}
+                    </td>
                 </tr>
                 </tbody>
             </table>

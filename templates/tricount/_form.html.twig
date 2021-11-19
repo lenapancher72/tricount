@@ -18,7 +18,8 @@
 </div>
 <div class="mb-3">
     {{ form_label(form.participants, 'Participants :') }}
-    {{ form_widget(form.participants) }}
+    {{ form_widget(form.participants, {'attr':{'class':'me-5'}}) }}
+    <a class="btn btn-primary" href="{{ path('app_register') }}">Ajouter un participant</a>
 </div>
 
 <button class="btn btn-primary">{{ button_label|default('Valider') }}</button>

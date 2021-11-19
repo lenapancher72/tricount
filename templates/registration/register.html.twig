@@ -21,9 +21,8 @@
                 {{ form_label(registrationForm.password, 'Mot de passe') }}
                 {{ form_widget(registrationForm.password, {'attr':{'class':'form-control'}}) }}
             </div>
-
+            <button class="btn btn-primary">{{ button_label|default('S\'inscrire') }}</button>
             {{ form_end(registrationForm) }}
-            <a class="btn btn-primary" href="{{ path('app_login') }}">S'inscrire</a>
         </div>
     </div>
 {% endblock %}
