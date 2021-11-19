@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Services\MailerService;
 use App\Services\BalanceService;
+use Proxies\__CG__\App\Entity\Useraccount;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * @Route("/")
@@ -103,15 +105,13 @@ class ExpenseController extends AbstractController
     /**
      * @Route("/tricount/{tricount}/expense/{expense_id}/edit", name="expense_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, EntityManagerInterface $entityManager, $expense_id): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager, $expense_id, Expense $expense): Response
     {
-        $form = $this->createForm(ExpenseType::class, null);
+        $form = $this->createForm(ExpenseType::class, $expense);
         $form->handleRequest($request);
 
-        $em = $entityManager->getRepository(Expense::class);
-        $expense = $em->findOneById($expense_id);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $entityManager->flush();
 
             return $this->redirectToRoute('expense_index', [
